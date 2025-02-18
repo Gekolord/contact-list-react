@@ -1,6 +1,8 @@
 import React from 'react';
 import logo from './logo.svg';
 import './App.css';
+// @ts-ignore
+import { List } from "antd";
 // test
 function App() {
   return (
