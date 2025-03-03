@@ -23,7 +23,7 @@ export default function ContactDataContextProvider({children}: ComponentProps) {
     }
     return (
         <dataContext.Provider value={contactsData}>
-
+            {children}
         </dataContext.Provider>
     )
 }
