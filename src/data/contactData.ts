@@ -12,6 +12,6 @@ export const allContactData = alphabet.reduce<{[key: string]: Contact[]}>((conta
 }, {})
 // Небольшой объект для тестов
 export const testObject = alphabet.reduce<{[key: string]: Contact[]}>((contactDataObject, letter) => {
-    contactDataObject[letter] = [{name: "john smith", vacancy: "developer", phone: "+3924923432", id: crypto.randomUUID()}]
+    contactDataObject[letter] = [{name: `${letter}ohn ${letter}mith`, vacancy: "developer", phone: "+3924923432", id: crypto.randomUUID()}]
     return contactDataObject;
 }, {})

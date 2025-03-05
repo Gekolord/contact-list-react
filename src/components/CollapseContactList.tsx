@@ -11,6 +11,6 @@ type CollapseListParams = {
 export default function CollapseContactList({dataKey, dataArray}: CollapseListParams) {
   return (
     // @ts-ignore потому что без него ts выдаёт ошибки которые ничем не фиксятся
-    <Collapse items={[{key: dataKey, label: dataKey, children: <ContactList contactArray={dataArray}/>}]}/>
+    <Collapse size="small" items={[{key: dataKey, label: dataKey, children: <ContactList contactArray={dataArray}/>}]}/>
   )
 }

@@ -4,6 +4,8 @@ import { Typography } from 'antd'
 import List from 'antd/es/list';
 import React from 'react'
 import { Contact } from '../data/contactData'
+import { useDispatch } from 'react-redux';
+
 const { Text } = Typography;
 export default function ContactList({ contactArray }: {contactArray: Contact[]}) {
   return (
@@ -15,7 +17,12 @@ export default function ContactList({ contactArray }: {contactArray: Contact[]})
     <List 
       dataSource={contactArray}
       renderItem={(contact: Contact) => (
-        <List.Item>
+        <List.Item
+          actions={
+                    [<a key="contact-edit">edit</a>, 
+                     <a onClick={() => console.log(contact)} key="contact-remove">remove</a>]
+                  }
+        >
           <List.Item.Meta 
             title={contact.name}
             description= {

@@ -3,10 +3,13 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import { allContactData } from './data/contactData';
 import { Provider } from 'react-redux';
-import { store } from './data/contactDataReducer';
+import { configureStore } from '@reduxjs/toolkit';
+import contactsReducer from './data/contactDataReducer'
 
+const store = configureStore({
+  reducer: contactsReducer,
+})
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
