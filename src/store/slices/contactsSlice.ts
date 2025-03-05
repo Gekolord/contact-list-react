@@ -1,5 +1,5 @@
 import { configureStore, createSlice, UnknownAction } from "@reduxjs/toolkit";
-import { allContactData, Contact, testObject } from "./contactData";
+import { allContactData, Contact, testObject } from "../../data/contactData";
 const initialState = testObject;
 const contactsSlice = createSlice({
     name: 'contacts',
@@ -7,11 +7,11 @@ const contactsSlice = createSlice({
     reducers: {
         contactAdded(state, action) {
             const {key, contact} = action.payload
-            return {...state, [key]: [...state[key], contact]}
+            state[key].push(contact)
         },
         contactRemoved(state, action) {
             const {key, id} = action.payload
-            return {...state, [key]: state[key].filter((contact) => contact.id !== id)}
+            state[key] = state[key].filter((contact) => contact.id !== id)
         }
     }
 })

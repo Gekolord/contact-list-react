@@ -5,9 +5,17 @@ import List from 'antd/es/list';
 import React from 'react'
 import { Contact } from '../data/contactData'
 import { useDispatch } from 'react-redux';
-
+import { contactRemoved } from '../store/slices/contactsSlice';
 const { Text } = Typography;
-export default function ContactList({ contactArray }: {contactArray: Contact[]}) {
+type ContactListProps = {
+  contactArray: Contact[],
+  alphabetLetter: string
+}
+export default function ContactList({ contactArray, alphabetLetter }: ContactListProps) {
+  const dispatch = useDispatch()
+  const handleRemove = (key: string, id: string) => {
+    dispatch(contactRemoved({key, id}))
+  }
   return (
     <>
     {contactArray.length === 0 ? (
@@ -20,7 +28,7 @@ export default function ContactList({ contactArray }: {contactArray: Contact[]})
         <List.Item
           actions={
                     [<a key="contact-edit">edit</a>, 
-                     <a onClick={() => console.log(contact)} key="contact-remove">remove</a>]
+                     <a onClick={() => handleRemove(alphabetLetter, contact.id)} key="contact-remove">remove</a>]
                   }
         >
           <List.Item.Meta 
