@@ -1,6 +1,5 @@
 import React from 'react';
 import './App.css';
-import { Collapse } from 'antd';
 import AllContacts from './components/AllContacts';
 // test
 function App() {
