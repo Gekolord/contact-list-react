@@ -14,6 +14,7 @@ export default function CollapseContactList({
 }: CollapseListParams) {
     return (
         <Collapse
+            // @ts-expect-error потому что тс думает, что у collapse нет атрибута size
             size="small"
             items={[
                 {

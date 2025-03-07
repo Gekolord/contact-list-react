@@ -1,4 +1,5 @@
 // Этот компонент отображает массив контактов
+// @ts-expect-error потому что тс думает, что в antd нет такого компонента
 import { Typography } from 'antd';
 import List from 'antd/es/list';
 import React from 'react';
