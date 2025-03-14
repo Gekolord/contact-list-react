@@ -1,11 +1,13 @@
 import React from 'react';
 import './App.css';
-import AllContacts from './components/AllContacts';
+import PageLayout from './components/PageLayout';
+import ContactForm from './components/ContactFormModal';
 // test
 function App() {
     return (
         <div className="App">
-            <AllContacts />
+            <PageLayout />
+            <ContactForm />
         </div>
     );
 }

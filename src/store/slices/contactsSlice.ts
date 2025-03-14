@@ -13,7 +13,16 @@ const contactsSlice = createSlice({
             const { key, id } = action.payload;
             state[key] = state[key].filter((contact) => contact.id !== id);
         },
+        contactAllCleared(state, action) {
+            const { allContacts } = action.payload;
+            for (const key in allContacts) {
+                if (Array.isArray(allContacts[key])) {
+                    allContacts[key] = [];
+                }
+            }
+        },
     },
 });
-export const { contactAdded, contactRemoved } = contactsSlice.actions;
+export const { contactAdded, contactRemoved, contactAllCleared } =
+    contactsSlice.actions;
 export default contactsSlice.reducer;
