@@ -8,7 +8,14 @@ type FinishValuesType = {
     phone: string;
 };
 
-export default function ContactForm() {
+type ContactFormModalProps = {
+    handleCancel?: () => void;
+    isOpen?: boolean;
+};
+export default function ContactForm({
+    handleCancel,
+    isOpen = true,
+}: ContactFormModalProps) {
     const id = useId();
     const dispatch = useDispatch();
     const onFinish = (values: FinishValuesType) => {
@@ -19,10 +26,17 @@ export default function ContactForm() {
         // @ts-expect-error непонятная ошибка от тса
         <Modal
             footer={[
-                <Button >
+                // @ts-expect-error непонятная ошибка от тса
+                <Button form={id} htmlType="submit" type="primary">
                     Submit
                 </Button>,
+                // @ts-expect-error непонятная ошибка от тса
+                <Button form={id} htmlType="button" onClick={handleCancel}>
+                    Cancel
+                </Button>,
             ]}
+            open={isOpen}
+            onCancel={handleCancel}
         >
             {/* @ts-expect-error непонятная ошибка от тса */}
             <Form
