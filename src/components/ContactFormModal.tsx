@@ -1,30 +1,37 @@
 import React, { useId } from 'react';
 import { Button, Form, Input, Modal } from 'antd';
-import { useDispatch } from 'react-redux';
-import { contactAdded } from '../store/slices/contactsSlice';
-type FinishValuesType = {
-    name: string;
-    vacancy: string;
-    phone: string;
-};
+import { useForm } from 'antd/es/form/Form';
+import { Contact } from '../data/contactData';
 
 type ContactFormModalProps = {
-    handleCancel?: () => void;
-    isOpen?: boolean;
+    onCancel: () => void;
+    isOpen: boolean;
+    handleFinish?: (formValues: Contact) => void;
+    formName: string;
 };
-export default function ContactForm({
-    handleCancel,
-    isOpen = true,
+export default function ContactFormModal({
+    onCancel,
+    isOpen,
+    handleFinish,
+    formName,
 }: ContactFormModalProps) {
+    const [form] = useForm();
     const id = useId();
-    const dispatch = useDispatch();
-    const onFinish = (values: FinishValuesType) => {
-        const key = values.name[0].toUpperCase();
-        dispatch(contactAdded({ key, values }));
+    const clearFields = () => {
+        form.setFieldsValue({
+            name: '',
+            vacancy: '',
+            phone: '',
+        });
+    };
+    const handleCancel = () => {
+        onCancel();
+        clearFields();
     };
     return (
         // @ts-expect-error непонятная ошибка от тса
         <Modal
+            title={formName}
             footer={[
                 // @ts-expect-error непонятная ошибка от тса
                 <Button form={id} htmlType="submit" type="primary">
@@ -40,8 +47,10 @@ export default function ContactForm({
         >
             {/* @ts-expect-error непонятная ошибка от тса */}
             <Form
+                form={form}
+                clearOnDestroy={true}
                 layout={'vertical'}
-                onFinish={onFinish}
+                onFinish={handleFinish}
                 autoComplete="off"
                 id={id}
             >
