@@ -1,4 +1,4 @@
-import React, { useId } from 'react';
+import React, { useEffect, useId } from 'react';
 import { Button, Form, Input, Modal } from 'antd';
 import { useForm } from 'antd/es/form/Form';
 import { Contact } from '../data/contactData';
@@ -6,14 +6,16 @@ import { Contact } from '../data/contactData';
 type ContactFormModalProps = {
     onCancel: () => void;
     isOpen: boolean;
-    handleFinish?: (formValues: Contact) => void;
+    onFinish: (formValues: Contact) => void;
     formName: string;
+    oldContact?: Contact;
 };
 export default function ContactFormModal({
     onCancel,
     isOpen,
-    handleFinish,
+    onFinish,
     formName,
+    oldContact,
 }: ContactFormModalProps) {
     const [form] = useForm();
     const id = useId();
@@ -28,9 +30,26 @@ export default function ContactFormModal({
         onCancel();
         clearFields();
     };
+    const handleFinish = () => {
+        onFinish(form.getFieldsValue());
+        clearFields();
+    };
+    const handleAfterOpenChange = (open: boolean) => {
+        if (open) {
+            if (oldContact) {
+                const { name, vacancy, phone } = oldContact;
+                form.setFieldsValue({
+                    name,
+                    vacancy,
+                    phone,
+                });
+            }
+        }
+    };
     return (
         // @ts-expect-error непонятная ошибка от тса
         <Modal
+            afterOpenChange={handleAfterOpenChange}
             title={formName}
             footer={[
                 // @ts-expect-error непонятная ошибка от тса

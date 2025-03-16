@@ -2,10 +2,11 @@
 // @ts-expect-error потому что тс думает, что в antd нет такого компонента
 import { Typography } from 'antd';
 import List from 'antd/es/list';
-import React from 'react';
+import React, { useState } from 'react';
 import { Contact } from '../data/contactData';
 import { useDispatch } from 'react-redux';
-import { contactRemoved } from '../store/slices/contactsSlice';
+import { contactEdited, contactRemoved } from '../store/slices/contactsSlice';
+import ContactFormModal from './ContactFormModal';
 const { Text } = Typography;
 type ContactListProps = {
     contactArray: Contact[];
@@ -15,10 +16,18 @@ export default function ContactList({
     contactArray,
     alphabetLetter,
 }: ContactListProps) {
+    const [isModalOpen, setIsModalOpen] = useState(false);
     const dispatch = useDispatch();
+    const handleClick = () => {
+        setIsModalOpen(true);
+    };
+    const handleCancel = () => {
+        setIsModalOpen(false);
+    };
     const handleRemove = (key: string, id: string) => {
         dispatch(contactRemoved({ key, id }));
     };
+
     return (
         <>
             {contactArray.length === 0 ? (
@@ -29,7 +38,9 @@ export default function ContactList({
                     renderItem={(contact: Contact) => (
                         <List.Item
                             actions={[
-                                <a key="contact-edit">edit</a>,
+                                <a onClick={handleClick} key="contact-edit">
+                                    edit
+                                </a>,
                                 <a
                                     onClick={() =>
                                         handleRemove(alphabetLetter, contact.id)
@@ -48,6 +59,27 @@ export default function ContactList({
                                         <div>Phone: {contact.phone}</div>
                                     </>
                                 }
+                            />
+                            <ContactFormModal
+                                oldContact={contact}
+                                onCancel={handleCancel}
+                                isOpen={isModalOpen}
+                                formName="Edit Form"
+                                onFinish={(newContact: Contact) => {
+                                    const oldContactKey =
+                                        contact.name[0].toUpperCase();
+                                    const oldContactId = contact.id;
+                                    const newContactKey =
+                                        newContact.name[0].toUpperCase();
+                                    dispatch(
+                                        contactEdited({
+                                            oldContactKey,
+                                            oldContactId,
+                                            newContactKey,
+                                            newContact,
+                                        })
+                                    );
+                                }}
                             />
                         </List.Item>
                     )}

@@ -22,8 +22,24 @@ const contactsSlice = createSlice({
                 }
             }
         },
+        contactEdited(state, action) {
+            const { oldContactKey, oldContactId, newContactKey, newContact } =
+                action.payload;
+            contactsSlice.caseReducers.contactRemoved(state, {
+                type: 'contacts/contactRemoved',
+                payload: { key: oldContactKey, id: oldContactId },
+            });
+            contactsSlice.caseReducers.contactAdded(state, {
+                type: 'contacts/contactAdded',
+                payload: { key: newContactKey, contact: newContact },
+            });
+        },
     },
 });
-export const { contactAdded, contactRemoved, contactAllCleared } =
-    contactsSlice.actions;
+export const {
+    contactAdded,
+    contactRemoved,
+    contactAllCleared,
+    contactEdited,
+} = contactsSlice.actions;
 export default contactsSlice.reducer;

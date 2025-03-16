@@ -16,6 +16,7 @@ export default function AddContact() {
     const handleAdded = (contact: Contact) => {
         const key = contact.name[0].toUpperCase();
         dispatch(contactAdded({ key, contact }));
+        setIsModalOpen(false);
     };
     return (
         <>
@@ -27,7 +28,7 @@ export default function AddContact() {
                 isOpen={isModalOpen}
                 onCancel={handleCancel}
                 formName="Add Contact"
-                handleFinish={handleAdded}
+                onFinish={handleAdded}
             />
         </>
     );
