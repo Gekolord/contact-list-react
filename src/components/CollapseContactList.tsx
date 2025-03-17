@@ -19,7 +19,7 @@ export default function CollapseContactList({
             items={[
                 {
                     key: dataKey,
-                    label: dataKey,
+                    label: `${dataKey} - ${dataArray.length}`,
                     children: (
                         <ContactList
                             contactArray={dataArray}
