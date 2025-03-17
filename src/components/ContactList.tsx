@@ -27,64 +27,64 @@ export default function ContactList({
     const handleRemove = (key: string, id: string) => {
         dispatch(contactRemoved({ key, id }));
     };
-
+    const handleFinish = (newContact: Contact, oldContact: Contact) => {
+        const oldContactKey = oldContact.name[0].toUpperCase();
+        const oldContactId = oldContact.id;
+        const newContactKey = newContact.name[0].toUpperCase();
+        dispatch(
+            contactEdited({
+                oldContactKey,
+                oldContactId,
+                newContactKey,
+                newContact,
+            })
+        );
+        setIsModalOpen(false);
+    };
+    if (contactArray.length === 0) {
+        return <Text type="secondary">No contacts by this letter.</Text>;
+    }
     return (
         <>
-            {contactArray.length === 0 ? (
-                <Text type="secondary">No contacts by this letter.</Text>
-            ) : (
-                <List
-                    dataSource={contactArray}
-                    renderItem={(contact: Contact) => (
-                        <List.Item
-                            actions={[
-                                <a onClick={handleClick} key="contact-edit">
-                                    edit
-                                </a>,
-                                <a
-                                    onClick={() =>
-                                        handleRemove(alphabetLetter, contact.id)
-                                    }
-                                    key="contact-remove"
-                                >
-                                    remove
-                                </a>,
-                            ]}
-                        >
-                            <List.Item.Meta
-                                title={contact.name}
-                                description={
-                                    <>
-                                        <div>Vacancy: {contact.vacancy}</div>
-                                        <div>Phone: {contact.phone}</div>
-                                    </>
+            <List
+                dataSource={contactArray}
+                renderItem={(contact: Contact) => (
+                    <List.Item
+                        actions={[
+                            <a onClick={handleClick} key="contact-edit">
+                                edit
+                            </a>,
+                            <a
+                                onClick={() =>
+                                    handleRemove(alphabetLetter, contact.id)
                                 }
-                            />
-                            <ContactFormModal
-                                oldContact={contact}
-                                onCancel={handleCancel}
-                                isOpen={isModalOpen}
-                                formName="Edit Form"
-                                onFinish={(newContact: Contact) => {
-                                    const oldContactKey =
-                                        contact.name[0].toUpperCase();
-                                    const oldContactId = contact.id;
-                                    const newContactKey =
-                                        newContact.name[0].toUpperCase();
-                                    dispatch(
-                                        contactEdited({
-                                            oldContactKey,
-                                            oldContactId,
-                                            newContactKey,
-                                            newContact,
-                                        })
-                                    );
-                                }}
-                            />
-                        </List.Item>
-                    )}
-                />
-            )}
+                                key="contact-remove"
+                            >
+                                remove
+                            </a>,
+                        ]}
+                    >
+                        <List.Item.Meta
+                            title={contact.name}
+                            description={
+                                <>
+                                    <div>Vacancy: {contact.vacancy}</div>
+                                    <div>Phone: {contact.phone}</div>
+                                </>
+                            }
+                        />
+                        <ContactFormModal
+                            oldContact={contact}
+                            onCancel={handleCancel}
+                            isOpen={isModalOpen}
+                            formName={`Edit Contact ${contact.name}`}
+                            onFinish={(newContact: Contact) => {
+                                handleFinish(newContact, contact);
+                            }}
+                        />
+                    </List.Item>
+                )}
+            />
         </>
     );
 }
