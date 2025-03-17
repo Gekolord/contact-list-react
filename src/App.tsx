@@ -8,7 +8,6 @@ function App() {
     const dispatch = useDispatch();
     useEffect(() => {
         dispatch(contactLoaded());
-        console.log(1);
     }, []);
     return (
         <div className="App">
