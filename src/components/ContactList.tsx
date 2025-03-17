@@ -10,12 +10,8 @@ import ContactFormModal from './ContactFormModal';
 const { Text } = Typography;
 type ContactListProps = {
     contactArray: Contact[];
-    alphabetLetter: string;
 };
-export default function ContactList({
-    contactArray,
-    alphabetLetter,
-}: ContactListProps) {
+export default function ContactList({ contactArray }: ContactListProps) {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const dispatch = useDispatch();
     const handleClick = () => {
@@ -56,7 +52,10 @@ export default function ContactList({
                             </a>,
                             <a
                                 onClick={() =>
-                                    handleRemove(alphabetLetter, contact.id)
+                                    handleRemove(
+                                        contact.name[0].toUpperCase(),
+                                        contact.id
+                                    )
                                 }
                                 key="contact-remove"
                             >

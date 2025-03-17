@@ -20,12 +20,7 @@ export default function CollapseContactList({
                 {
                     key: dataKey,
                     label: `${dataKey} - ${dataArray.length}`,
-                    children: (
-                        <ContactList
-                            contactArray={dataArray}
-                            alphabetLetter={dataKey}
-                        />
-                    ),
+                    children: <ContactList contactArray={dataArray} />,
                 },
             ]}
         />
