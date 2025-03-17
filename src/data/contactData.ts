@@ -13,6 +13,7 @@ export const allContactData = alphabet.reduce<{ [key: string]: Contact[] }>(
     },
     {}
 );
+
 // Небольшой объект для тестов
 export const testObject = alphabet.reduce<{ [key: string]: Contact[] }>(
     (contactDataObject, letter) => {

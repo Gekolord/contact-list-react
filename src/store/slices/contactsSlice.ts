@@ -1,26 +1,29 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { testObject } from '../../data/contactData';
-const initialState = testObject;
+import { allContactData, Contact } from '../../data/contactData';
+const initialState = allContactData;
 const contactsSlice = createSlice({
     name: 'contacts',
     initialState,
     reducers: {
         contactAdded(state, action) {
             const { key, contact } = action.payload;
-            contact.id = crypto.randomUUID();
+            const id = crypto.randomUUID();
+            contact.id = id;
+            localStorage.setItem(id, JSON.stringify(contact));
             state[key].push(contact);
         },
         contactRemoved(state, action) {
             const { key, id } = action.payload;
             state[key] = state[key].filter((contact) => contact.id !== id);
+            localStorage.removeItem(id);
         },
-        contactAllCleared(state, action) {
-            const { allContacts } = action.payload;
-            for (const key in allContacts) {
-                if (Array.isArray(allContacts[key])) {
-                    allContacts[key] = [];
+        contactAllCleared(state) {
+            for (const key in state) {
+                if (Array.isArray(state[key])) {
+                    state[key] = [];
                 }
             }
+            localStorage.clear();
         },
         contactEdited(state, action) {
             const { oldContactKey, oldContactId, newContactKey, newContact } =
@@ -34,6 +37,17 @@ const contactsSlice = createSlice({
                 payload: { key: newContactKey, contact: newContact },
             });
         },
+        contactLoaded(state) {
+            const localStorageKeys = Object.keys(localStorage);
+            for (const key of localStorageKeys) {
+                const stringifiedContact = localStorage.getItem(key);
+                if (stringifiedContact) {
+                    const contact: Contact = JSON.parse(stringifiedContact);
+                    const stateKey = contact.name[0].toUpperCase();
+                    state[stateKey].push(contact);
+                }
+            }
+        },
     },
 });
 export const {
@@ -41,5 +55,6 @@ export const {
     contactRemoved,
     contactAllCleared,
     contactEdited,
+    contactLoaded,
 } = contactsSlice.actions;
 export default contactsSlice.reducer;

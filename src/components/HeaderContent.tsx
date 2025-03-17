@@ -2,6 +2,7 @@ import React from 'react';
 // @ts-expect-error тс ругается по непонятной причине
 import { Button, Flex } from 'antd';
 import AddContact from './AddContact';
+import RemoveAllContacts from './RemoveAllContacts';
 
 export default function HeaderContent() {
     return (
@@ -9,10 +10,7 @@ export default function HeaderContent() {
             <AddContact />
             {/* @ts-expect-error тс ругается по непонятной причине*/}
             <Button>Search</Button>
-            {/* @ts-expect-error тс ругается по непонятной причине*/}
-            <Button color={'danger'} variant={'solid'}>
-                Remove All
-            </Button>
+            <RemoveAllContacts />
         </Flex>
     );
 }
