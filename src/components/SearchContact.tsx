@@ -26,15 +26,13 @@ export default function SearchContact() {
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const value = event.target.value;
         setInputValue(value);
-        if (value) {
-            const keyForArray = value[0].toUpperCase();
-            if (allContacts[keyForArray]) {
-                setSearchedContactArray([
-                    ...getContactArrayByName(allContacts[keyForArray], value),
-                ]);
-            } else {
-                setSearchedContactArray([]);
-            }
+        if (value && allContacts[value[0].toUpperCase()]) {
+            setSearchedContactArray([
+                ...getContactArrayByName(
+                    allContacts[value[0].toUpperCase()],
+                    value
+                ),
+            ]);
         } else {
             setSearchedContactArray([]);
         }
