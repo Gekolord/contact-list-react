@@ -3,16 +3,12 @@ import { Input } from 'antd';
 import { Modal } from 'antd';
 import React, { useEffect, useState } from 'react';
 import ContactList from './ContactList';
-import getContactArrayByName from '../helpers/getContactArrayByName';
 import { useSelector } from 'react-redux';
 import { RootState } from '../store/store';
-import { Contact } from '../data/contactData';
 import { selectContactsByName } from '../store/slices/selectors/selectItemsByName';
 
 export default function SearchContact() {
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const allContacts = useSelector((state: RootState) => state.contacts);
-
     const handleClick = () => {
         setIsModalOpen(true);
     };
