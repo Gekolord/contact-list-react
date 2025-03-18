@@ -1,35 +1,31 @@
-import { Button, Modal } from 'antd';
-import React, { useState } from 'react';
+import { Button, message, Popconfirm } from 'antd';
+import React from 'react';
 import { useDispatch } from 'react-redux';
 import { contactAllCleared } from '../store/slices/contactsSlice';
-
+import type { PopconfirmProps } from 'antd';
 export default function RemoveAllContacts() {
-    const [isModalOpen, setIsModalOpen] = useState(false);
-    const handleClick = () => {
-        setIsModalOpen(true);
-    };
-    const handleCancel = () => {
-        setIsModalOpen(false);
+    const handleCancel: PopconfirmProps['onCancel'] = () => {
+        message.error('Canceled');
     };
     const dispatch = useDispatch();
-    const handleOk = () => {
+    const handleOk: PopconfirmProps['onConfirm'] = () => {
         dispatch(contactAllCleared());
-        setIsModalOpen(false);
+        message.success('All contacts removed!');
     };
     return (
         <div>
-            {/*@ts-expect-error тс ругается по непонятной причине* */}
-            <Button color={'danger'} variant={'solid'} onClick={handleClick}>
-                Remove All
-            </Button>
-
-            <Modal
-                title="Are you sure?"
-                // @ts-expect-error тс ругается по непонятной причине
-                open={isModalOpen}
-                onOk={handleOk}
+            {/* @ts-expect-error тс ругается по непонятной причине */}
+            <Popconfirm
+                title="Remove all contacts"
+                description="Are you sure you want to remove all contacts?"
+                onConfirm={handleOk}
                 onCancel={handleCancel}
-            ></Modal>
+            >
+                {/*@ts-expect-error тс ругается по непонятной причине* */}
+                <Button color={'danger'} variant={'solid'}>
+                    Remove All
+                </Button>
+            </Popconfirm>
         </div>
     );
 }

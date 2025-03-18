@@ -4,7 +4,6 @@ import { Modal } from 'antd';
 import React, { useEffect, useState } from 'react';
 import ContactList from './ContactList';
 import { useSelector } from 'react-redux';
-import { RootState } from '../store/store';
 import { selectContactsByName } from '../store/slices/selectors/selectItemsByName';
 
 export default function SearchContact() {
