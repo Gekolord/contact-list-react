@@ -7,36 +7,27 @@ import getContactArrayByName from '../helpers/getContactArrayByName';
 import { useSelector } from 'react-redux';
 import { RootState } from '../store/store';
 import { Contact } from '../data/contactData';
+import { selectContactsByName } from '../store/slices/selectors/selectItemsByName';
 
 export default function SearchContact() {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const allContacts = useSelector((state: RootState) => state.contacts);
-    const [searchedContactArray, setSearchedContactArray] = useState<Contact[]>(
-        []
-    );
+
     const handleClick = () => {
         setIsModalOpen(true);
     };
     const handleCancel = () => {
         setIsModalOpen(false);
         setInputValue('');
-        setSearchedContactArray([]);
     };
     const [inputValue, setInputValue] = useState('');
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const value = event.target.value;
         setInputValue(value);
-        if (value && allContacts[value[0].toUpperCase()]) {
-            setSearchedContactArray([
-                ...getContactArrayByName(
-                    allContacts[value[0].toUpperCase()],
-                    value
-                ),
-            ]);
-        } else {
-            setSearchedContactArray([]);
-        }
     };
+    const searchedContactArray = useSelector((state) => {
+        return selectContactsByName(state, inputValue);
+    });
     useEffect(() => {
         console.log(searchedContactArray);
     }, [searchedContactArray]);
