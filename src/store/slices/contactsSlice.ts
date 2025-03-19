@@ -7,10 +7,12 @@ const contactsSlice = createSlice({
     reducers: {
         contactAdded(state, action) {
             const { key, contact } = action.payload;
-            const id = crypto.randomUUID();
-            contact.id = id;
-            localStorage.setItem(id, JSON.stringify(contact));
-            state[key].push(contact);
+            if (state[key]) {
+                const id = crypto.randomUUID();
+                contact.id = id;
+                localStorage.setItem(id, JSON.stringify(contact));
+                state[key].push(contact);
+            }
         },
         contactRemoved(state, action) {
             const { key, id } = action.payload;

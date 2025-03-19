@@ -35,7 +35,6 @@ export default function SearchContact() {
                 open={isModalOpen}
                 footer={null}
                 onCancel={handleCancel}
-                width={'50%'}
                 title="Search..."
             >
                 <Input
