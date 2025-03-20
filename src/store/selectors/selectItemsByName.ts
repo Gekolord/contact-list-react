@@ -1,5 +1,5 @@
 import { createSelector } from '@reduxjs/toolkit';
-import { RootState } from '../../store';
+import { RootState } from '../store';
 
 const selectContactsState = (state: RootState) => state.contacts;
 // получает строку, возвращает список контактов по имени, начинающихся с данной строки

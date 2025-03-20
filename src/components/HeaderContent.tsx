@@ -1,6 +1,6 @@
 import React from 'react';
 // @ts-expect-error тс ругается по непонятной причине
-import { Button, Flex } from 'antd';
+import { Flex } from 'antd';
 import AddContact from './AddContact';
 import RemoveAllContacts from './RemoveAllContacts';
 import SearchContact from './SearchContact';

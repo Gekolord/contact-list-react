@@ -4,7 +4,7 @@ import { Modal } from 'antd';
 import React, { useEffect, useState } from 'react';
 import ContactList from './ContactList';
 import { useSelector } from 'react-redux';
-import { selectContactsByName } from '../store/slices/selectors/selectItemsByName';
+import { selectContactsByName } from '../store/selectors/selectItemsByName';
 
 export default function SearchContact() {
     const [isModalOpen, setIsModalOpen] = useState(false);
