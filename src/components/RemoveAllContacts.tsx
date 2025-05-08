@@ -1,13 +1,13 @@
 import { Button, message, Popconfirm } from 'antd';
 import React from 'react';
-import { useDispatch } from 'react-redux';
 import { contactAllCleared } from '../store/slices/contactsSlice';
 import type { PopconfirmProps } from 'antd';
+import { useAppDispatch } from '../hooks/redux';
 export default function RemoveAllContacts() {
     const handleCancel: PopconfirmProps['onCancel'] = () => {
         message.error('Canceled');
     };
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
     const handleOk: PopconfirmProps['onConfirm'] = () => {
         dispatch(contactAllCleared());
         message.success('All contacts removed!');

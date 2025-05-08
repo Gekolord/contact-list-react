@@ -4,16 +4,16 @@ import { Typography } from 'antd';
 import List from 'antd/es/list';
 import React, { useState } from 'react';
 import { Contact } from '../data/contactData';
-import { useDispatch } from 'react-redux';
 import { contactEdited, contactRemoved } from '../store/slices/contactsSlice';
 import ContactFormModal from './ContactFormModal';
+import { useAppDispatch } from '../hooks/redux';
 const { Text } = Typography;
 type ContactListProps = {
     contactArray: Contact[];
 };
 export default function ContactList({ contactArray }: ContactListProps) {
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
     const handleClick = () => {
         setIsModalOpen(true);
     };

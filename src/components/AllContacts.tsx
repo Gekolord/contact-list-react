@@ -1,18 +1,20 @@
 import React from 'react';
 import CollapseContactList from './CollapseContactList';
-import { useSelector } from 'react-redux';
-import { RootState } from '../store/store';
+import { useAppSelector } from '../hooks/redux';
+import { isAlphabet } from '../typeGuards/isAlphabet';
 export default function AllContacts() {
-    const allContacts = useSelector((state: RootState) => state.contacts);
+    const allContacts = useAppSelector((state) => state.contactsReducer);
     return (
         <>
-            {Object.keys(allContacts).map((key: string) => {
-                return (
-                    <CollapseContactList
-                        dataArray={allContacts[key]}
-                        dataKey={key}
-                    />
-                );
+            {Object.keys(allContacts).map((key) => {
+                if (isAlphabet(key)) {
+                    return (
+                        <CollapseContactList
+                            dataArray={allContacts[key]}
+                            dataKey={key}
+                        />
+                    );
+                } else throw `Ключ объекта ${key} не является валидным ключом.`;
             })}
         </>
     );
